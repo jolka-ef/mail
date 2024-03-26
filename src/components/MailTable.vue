@@ -13,7 +13,7 @@
       v-for="email in unarchivedEmails"
       :key="email.id"
       :class="['clickable', email.read ? 'read' : '']"
-      @click="readEmail(email)"
+      @click="openEmail(email)"
     >
       <td><input type="checkbox" /></td>
       <td>{{ email.from }}</td>
@@ -21,20 +21,25 @@
         <strong> {{ email.subject }} </strong> - {{ email.body }}
       </td>
       <td class="date">
-        {{ format(new Date(email.sentAt), 'MMM dd yyyy') }}
+        {{ format(new Date(email.sentAt), 'MMM do yyyy') }}
       </td>
       <td><button @click="archiveEmail(email)">Archive</button></td>
     </tr>
   </table>
+  <MailView v-if="openedEmail" :email="openedEmail" />
 </template>
 <script>
 import axios from 'axios';
 import { format } from 'date-fns';
 import { ref } from 'vue';
+import MailView from './MailView.vue';
 export default {
   async setup() {
     let { data: emails } = await axios.get('http://localhost:3000/emails');
-    return { emails: ref(emails), format };
+    return { emails: ref(emails), format, openedEmail: null };
+  },
+  components: {
+    MailView,
   },
   computed: {
     sortedEmails() {
@@ -51,8 +56,9 @@ export default {
       email.archived = true;
       this.updateEmail(email);
     },
-    readEmail(email) {
+    openEmail(email) {
       email.read = true;
+      this.openedEmail = email;
       this.updateEmail(email);
     },
     updateEmail(email) {
