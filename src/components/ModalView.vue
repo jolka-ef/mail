@@ -7,13 +7,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  emits: ['closeModal'],
-
-  setup(props, { emit }) {
-    emit('closeModal');
-  },
-};
-</script>
+<script></script>
 <style scoped></style>
