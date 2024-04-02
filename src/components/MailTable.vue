@@ -1,13 +1,9 @@
 <template>
-  <h1>
-    <pre>{{ emailSelection.emails.size }}</pre>
-  </h1>
-  <div>
-    <input type="checkbox" />
-    <button>Mark Read</button>
-    <button>Mark Unread</button>
-    <button>Archive</button>
-  </div>
+  <pre>
+    <h1>{{ unarchivedEmails.length }} emails in inbox</h1>
+    <h1>{{ emailSelection.emails.size }} emails selected</h1>
+  </pre>
+  <BulkActionBar :emails="unarchivedEmails" />
   <table class="mail-table">
     <thead>
       <tr>
@@ -27,7 +23,7 @@
         <input
           type="checkbox"
           @click="emailSelection.toggle(email)"
-          :selected="emailSelection.emails.has(email)"
+          :checked="emailSelection.emails.has(email)"
         />
       </td>
       <td @click="openEmail(email)">{{ email.from }}</td>
@@ -48,6 +44,7 @@
 import axios from 'axios';
 import { format } from 'date-fns';
 import { ref } from 'vue';
+import BulkActionBar from './BulkActionBar.vue';
 import MailView from './MailView.vue';
 import ModalView from './ModalView.vue';
 import useEmailSelection from '../composables/use-email-selection.js';
@@ -64,6 +61,7 @@ export default {
     };
   },
   components: {
+    BulkActionBar,
     MailView,
     ModalView,
   },
