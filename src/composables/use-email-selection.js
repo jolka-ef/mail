@@ -1,6 +1,5 @@
-import axios from 'axios';
+import MailService from '@/services/MailService';
 import { reactive } from 'vue';
-import { serverAddress } from '@/utils/serverAddress';
 let emails = reactive(new Set());
 
 export const useEmailSelection = function () {
@@ -13,7 +12,7 @@ export const useEmailSelection = function () {
   let forSelected = (fn) => {
     emails.forEach((email) => {
       fn(email);
-      axios.put(`${serverAddress}/emails/${email.id}`, email);
+      MailService.update(email);
     });
   };
   let markRead = () => forSelected((e) => (e.read = true));

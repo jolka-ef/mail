@@ -37,7 +37,7 @@
   </ModalView>
 </template>
 <script>
-import axios from 'axios';
+import MailService from '@/services/MailService';
 import { format } from 'date-fns';
 import { ref } from 'vue';
 import BulkActionBar from './BulkActionBar.vue';
@@ -47,8 +47,7 @@ import useEmailSelection from '../composables/use-email-selection.js';
 
 export default {
   async setup() {
-    let { data: emails } = await axios.get('http://localhost:3000/emails');
-
+    let { data: emails } = await MailService.getEmails();
     return {
       emailSelection: useEmailSelection(),
       emails: ref(emails),
@@ -74,7 +73,7 @@ export default {
   methods: {
     archiveEmail(email) {
       email.archived = true;
-      this.updateEmail(email);
+      MailService.update(email);
     },
     changeEmail({ changeIndex, closeModal, save, toggleArchive, toggleRead }) {
       let email = this.openedEmail;
@@ -90,7 +89,7 @@ export default {
         this.openedEmail = null;
       }
       if (save) {
-        this.updateEmail(email);
+        MailService.update(email);
       }
 
       if (toggleArchive) {
@@ -105,11 +104,8 @@ export default {
 
       if (email) {
         email.read = true;
-        this.updateEmail(email);
+        MailService.update(email);
       }
-    },
-    updateEmail(email) {
-      axios.put(`http://localhost:3000/emails/${email.id}`, email);
     },
   },
 };
