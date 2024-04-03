@@ -1,5 +1,14 @@
 <template>
-  <BulkActionBar :emails="unarchivedEmails" />
+  <button @click="selectScreen('inbox')" :disabled="selectedScreen == 'inbox'">
+    Inbox
+  </button>
+  <button
+    @click="selectScreen('archive')"
+    :disabled="selectedScreen == 'archive'"
+  >
+    Archived
+  </button>
+  <BulkActionBar :emails="filteredEmails" />
   <table class="mail-table">
     <thead>
       <tr>
@@ -11,7 +20,7 @@
       </tr>
     </thead>
     <tr
-      v-for="email in unarchivedEmails"
+      v-for="email in filteredEmails"
       :key="email.id"
       :class="['clickable', email.read ? 'read' : '']"
     >
@@ -53,6 +62,7 @@ export default {
       emails: ref(emails),
       format,
       openedEmail: ref(null),
+      selectedScreen: ref('inbox'),
     };
   },
   components: {
@@ -66,8 +76,12 @@ export default {
         return emailA.sentAt < emailB.sentAt ? 100 : -1;
       });
     },
-    unarchivedEmails() {
-      return this.sortedEmails.filter((email) => !email.archived);
+    filteredEmails() {
+      if (this.selectedScreen == 'inbox') {
+        return this.sortedEmails.filter((email) => !email.archived);
+      } else {
+        return this.sortedEmails.filter((email) => email.archived);
+      }
     },
   },
   methods: {
@@ -79,7 +93,7 @@ export default {
       let email = this.openedEmail;
 
       if (changeIndex) {
-        let emails = this.unarchivedEmails;
+        let emails = this.filteredEmails;
         let currentIndex = emails.indexOf(email);
         const newEmail = emails[currentIndex + changeIndex];
         console.log(newEmail);
@@ -106,6 +120,10 @@ export default {
         email.read = true;
         MailService.update(email);
       }
+    },
+    selectScreen(newScreen) {
+      this.selectedScreen = newScreen;
+      this.emailSelection.clear();
     },
   },
 };
