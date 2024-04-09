@@ -14,9 +14,8 @@
       <tr>
         <th scope="col" class="sr-only">Checkbox</th>
         <th scope="col" class="sr-only">From</th>
-        <th scope="col" class="sr-only">Email content</th>
+        <th scope="col" class="sr-only">Email sybject</th>
         <th scope="col" class="sr-only">Sent at</th>
-        <th scope="col" class="sr-only">Archive</th>
       </tr>
     </thead>
     <tr
@@ -33,12 +32,11 @@
       </td>
       <td @click="openEmail(email)">{{ email.from }}</td>
       <td @click="openEmail(email)">
-        <strong> {{ email.subject }} </strong> - {{ email.body }}
+        <strong> {{ email.subject }} </strong>
       </td>
       <td class="date" @click="openEmail(email)">
-        {{ format(new Date(email.sentAt), 'MMM do yyyy') }}
+        {{ formatDate(email.sentAt) }}
       </td>
-      <td><button @click="archiveEmail(email)">Archive</button></td>
     </tr>
   </table>
   <ModalView v-if="openedEmail" @closeModal="openedEmail = null">
@@ -46,8 +44,8 @@
   </ModalView>
 </template>
 <script>
+import { formatDate } from '@/utils/formatDate.js';
 import MailService from '@/services/MailService';
-import { format } from 'date-fns';
 import { ref } from 'vue';
 import BulkActionBar from './BulkActionBar.vue';
 import MailView from './MailView.vue';
@@ -57,10 +55,11 @@ import useEmailSelection from '../composables/use-email-selection.js';
 export default {
   async setup() {
     let { data: emails } = await MailService.getEmails();
+
     return {
       emailSelection: useEmailSelection(),
       emails: ref(emails),
-      format,
+      formatDate,
       openedEmail: ref(null),
       selectedScreen: ref('inbox'),
     };
@@ -85,10 +84,6 @@ export default {
     },
   },
   methods: {
-    archiveEmail(email) {
-      email.archived = true;
-      MailService.update(email);
-    },
     changeEmail({ changeIndex, closeModal, save, toggleArchive, toggleRead }) {
       let email = this.openedEmail;
 
