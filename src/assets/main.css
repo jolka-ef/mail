@@ -1,5 +1,3 @@
-
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -35,11 +33,11 @@ button.selected {
 }
 
 input[type='checkbox'] {
-  -webkit-appearance:none;
+  -webkit-appearance: none;
   cursor: pointer;
-  width:24px;
-  height:24px;
-  background:white;
+  width: 24px;
+  height: 24px;
+  background: white;
   border-radius: 2px;
   border: 1px solid #555;
   position: relative;
@@ -48,7 +46,7 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox'].partial-check {
-  background: #ABC;
+  background: #abc;
 }
 
 input[type='checkbox']:checked {
@@ -61,7 +59,8 @@ input[type='checkbox']:checked {
 
 /* Modal */
 
-.modal, .overlay {
+.modal,
+.overlay {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -99,7 +98,7 @@ input[type='checkbox']:checked {
   table-layout: fixed;
 }
 .mail-table tr.read {
-  background-color: #EEE;
+  background-color: #eee;
 }
 .mail-table tr {
   height: 40px;
@@ -119,7 +118,25 @@ input[type='checkbox']:checked {
 }
 
 .mail-table td.date {
-  width: 120px;
+  width: 200px;
+  text-align: right;
+}
+.mail-table td.date span {
+  margin: 0.25em;
+}
+
+.mail-table td.date svg {
+  width: 1em;
+}
+.mail-table td button.star {
+  background: transparent;
+  border: none;
+  margin: 0;
+}
+
+.mail-table td button.star svg {
+  height: 1.5em;
+  width: 1.5em;
 }
 
 /* Bulk Action Bar */
