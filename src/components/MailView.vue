@@ -14,16 +14,14 @@
       Subject : <strong>{{ email.subject }}</strong>
     </h2>
     <p>
-      <em
-        >{{ email.from }} on {{ format(new Date(email.sentAt), 'MMM do yyyy') }}
-      </em>
+      <em>{{ email.from }} on {{ formatDate(email.sendDate) }} </em>
     </p>
     <p v-html="marked(email.body)" />
   </div>
 </template>
 
 <script>
-import { format } from 'date-fns';
+import { formatDate } from '@/utils/formatDate.js';
 import { marked } from 'marked';
 import useKeydown from '@/composables/use-keydown';
 export default {
@@ -64,7 +62,7 @@ export default {
     return {
       goNewer,
       goOlder,
-      format,
+      formatDate,
       marked,
       toggleArchive,
       toggleRead,
