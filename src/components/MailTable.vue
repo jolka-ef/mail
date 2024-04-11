@@ -85,7 +85,7 @@ export default {
   computed: {
     sortedEmails() {
       return this.emails.sort((emailA, emailB) => {
-        return emailA.sentAt < emailB.sentAt ? 100 : -1;
+        return emailA.sendDate < emailB.sendDate ? 100 : -1;
       });
     },
     filteredEmails() {
