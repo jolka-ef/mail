@@ -32,6 +32,14 @@
           :checked="emailSelection.emails.has(email)"
         />
       </td>
+      <td>
+        <input
+          class="starMask"
+          type="checkbox"
+          @click="toggleFavorite(email)"
+          :checked="email.favorite"
+        />
+      </td>
       <td @click="openEmail(email)">
         {{ email.firstname }} {{ email.surname }}
       </td>
@@ -110,7 +118,14 @@ export default {
     },
   },
   methods: {
-    changeEmail({ changeIndex, closeModal, save, toggleArchive, toggleRead }) {
+    changeEmail({
+      changeIndex,
+      closeModal,
+      save,
+      toggleArchive,
+      toggleFavorite,
+      toggleRead,
+    }) {
       let email = this.openedEmail;
 
       if (changeIndex) {
@@ -130,6 +145,9 @@ export default {
       if (toggleArchive) {
         email.archived = !email.archived;
       }
+      if (toggleFavorite) {
+        email.favorite = !email.favorite;
+      }
       if (toggleRead) {
         email.read = !email.read;
       }
@@ -145,6 +163,10 @@ export default {
     selectScreen(newScreen) {
       this.selectedScreen = newScreen;
       this.emailSelection.clear();
+    },
+    toggleFavorite(email) {
+      email.favorite = !email.favorite;
+      MailService.update(email);
     },
   },
 };

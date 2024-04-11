@@ -1,6 +1,12 @@
 <template>
   <div class="email-display">
     <div>
+      <input
+        class="starMask"
+        type="checkbox"
+        @click="toggleFavorite"
+        :checked="email.favorite"
+      />
       <button @click="toggleArchive">
         {{ email.archived ? 'Move to Inbox (e)' : 'Archive (e)' }}
       </button>
@@ -34,6 +40,9 @@ export default {
         closeModal: true,
       });
     };
+    let toggleFavorite = () => {
+      emit('changeEmail', { toggleFavorite: true, save: true });
+    };
     let toggleRead = () => {
       emit('changeEmail', { toggleRead: true, save: true });
     };
@@ -65,6 +74,7 @@ export default {
       formatDate,
       marked,
       toggleArchive,
+      toggleFavorite,
       toggleRead,
     };
   },
