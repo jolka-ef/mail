@@ -1,9 +1,9 @@
 <script>
-import MailTable from './components/MailTable.vue';
+import MailScreen from './components/MailScreen.vue';
 export default {
   name: 'App',
   components: {
-    MailTable,
+    MailScreen,
   },
 };
 </script>
@@ -11,7 +11,7 @@ export default {
   <h1>Mail Inbox</h1>
   <Suspense>
     <template v-slot:default>
-      <MailTable />
+      <MailScreen />
     </template>
     <template v-slot:fallback> Loading.. </template>
   </Suspense>

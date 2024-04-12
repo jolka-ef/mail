@@ -1,14 +1,5 @@
 <template>
-  <button @click="selectScreen('inbox')" :disabled="selectedScreen == 'inbox'">
-    Inbox
-  </button>
-  <button
-    @click="selectScreen('archive')"
-    :disabled="selectedScreen == 'archive'"
-  >
-    Archived
-  </button>
-  <BulkActionBar :emails="filteredEmails" />
+  <BulkActionBar :emails="emails" />
   <table class="mail-table">
     <thead>
       <tr>
@@ -19,7 +10,7 @@
       </tr>
     </thead>
     <tr
-      v-for="email in filteredEmails"
+      v-for="email in emails"
       :key="email.id"
       :class="['clickable', email.read ? 'read' : '']"
       @mouseenter="isHovering = email.id"
@@ -78,24 +69,20 @@
 </template>
 <script>
 import { formatDate } from '@/utils/formatDate.js';
-import MailService from '@/services/MailService';
 import { ref } from 'vue';
 import BulkActionBar from './BulkActionBar.vue';
+import MailService from '@/services/MailService';
 import MailView from './MailView.vue';
 import ModalView from './ModalView.vue';
 import useEmailSelection from '../composables/use-email-selection.js';
 
 export default {
   async setup() {
-    let { data: emails } = await MailService.getEmails();
-
     return {
       emailSelection: useEmailSelection(),
-      emails: ref(emails),
       formatDate,
       isHovering: ref(null),
       openedEmail: ref(null),
-      selectedScreen: ref('inbox'),
     };
   },
   components: {
@@ -103,20 +90,7 @@ export default {
     MailView,
     ModalView,
   },
-  computed: {
-    sortedEmails() {
-      return this.emails.sort((emailA, emailB) => {
-        return emailA.sendDate < emailB.sendDate ? 100 : -1;
-      });
-    },
-    filteredEmails() {
-      if (this.selectedScreen == 'inbox') {
-        return this.sortedEmails.filter((email) => !email.archived);
-      } else {
-        return this.sortedEmails.filter((email) => email.archived);
-      }
-    },
-  },
+
   methods: {
     changeEmail({
       changeIndex,
@@ -160,13 +134,16 @@ export default {
         MailService.update(email);
       }
     },
-    selectScreen(newScreen) {
-      this.selectedScreen = newScreen;
-      this.emailSelection.clear();
-    },
+
     toggleFavorite(email) {
       email.favorite = !email.favorite;
       MailService.update(email);
+    },
+  },
+  props: {
+    emails: {
+      type: Array,
+      required: true,
     },
   },
 };
