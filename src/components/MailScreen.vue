@@ -6,6 +6,25 @@
     >
       Inbox
     </button>
+
+    <button
+      @click="selectScreen('starred')"
+      :disabled="selectedScreen == 'starred'"
+    >
+      Starred
+    </button>
+
+    <button @click="selectScreen('spam')" :disabled="selectedScreen == 'spam'">
+      Spam
+    </button>
+
+    <button
+      @click="selectScreen('trash')"
+      :disabled="selectedScreen == 'trash'"
+    >
+      Trash
+    </button>
+
     <button
       @click="selectScreen('archive')"
       :disabled="selectedScreen == 'archive'"
@@ -42,10 +61,16 @@ export default {
       });
     },
     filteredEmails() {
-      if (this.selectedScreen == 'inbox') {
-        return this.sortedEmails.filter((email) => !email.archived);
-      } else {
-        return this.sortedEmails.filter((email) => email.archived);
+      if (this.selectedScreen == 'trash') {
+        return this.sortedEmails.filter((email) => email.folder === 'trash');
+      } else if (this.selectedScreen == 'spam') {
+        return this.sortedEmails.filter((email) => email.folder === 'spam');
+      } else if (this.selectedScreen == 'starred') {
+        return this.sortedEmails.filter((email) => email.favorite);
+      } else if (this.selectedScreen == 'inbox') {
+        return this.sortedEmails.filter((email) => email.folder === 'inbox');
+      } else if (this.selectedScreen == 'archive') {
+        return this.sortedEmails.filter((email) => email.folder === 'archive');
       }
     },
   },
