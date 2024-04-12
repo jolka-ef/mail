@@ -8,7 +8,6 @@ export default {
 };
 </script>
 <template>
-  <h1>Mail Inbox</h1>
   <Suspense>
     <template v-slot:default>
       <MailScreen />

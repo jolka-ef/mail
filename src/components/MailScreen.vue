@@ -1,4 +1,6 @@
 <template>
+  <h1>Mail {{ selectedScreen[0].toUpperCase() + selectedScreen.slice(1) }}</h1>
+
   <nav>
     <button
       @click="selectScreen('inbox')"
