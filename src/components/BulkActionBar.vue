@@ -27,7 +27,7 @@
     <span class="buttons"
       ><button
         @click="emailSelection.archive()"
-        :disabled="numberSelected === 0"
+        :disabled="[...emailSelection.emails].every((e) => e.archived)"
       >
         Archive
       </button></span
