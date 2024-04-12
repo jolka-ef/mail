@@ -1,5 +1,4 @@
 <template>
-  <BulkActionBar :emails="emails" />
   <table class="mail-table">
     <thead>
       <tr>

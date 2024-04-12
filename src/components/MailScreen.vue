@@ -34,10 +34,14 @@
       Archived
     </button>
   </nav>
+  <BulkActionBar :emails="filteredEmails" :screen="selectedScreen" />
+
   <MailTable :emails="filteredEmails" />
 </template>
 <script>
 import { ref } from 'vue';
+import BulkActionBar from './BulkActionBar.vue';
+
 import MailService from '@/services/MailService';
 import MailTable from './MailTable.vue';
 
@@ -54,6 +58,7 @@ export default {
     };
   },
   components: {
+    BulkActionBar,
     MailTable,
   },
   computed: {

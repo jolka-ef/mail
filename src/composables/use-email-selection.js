@@ -4,11 +4,12 @@ let emails = reactive(new Set());
 
 export const useEmailSelection = function () {
   let archive = () => {
-    forSelected((e) => (e.archived = true));
+    forSelected((e) => (e.folder = 'archive'));
     clear();
   };
   let addMultiple = (newEmails) =>
     newEmails.forEach((email) => emails.add(email));
+
   let forSelected = (fn) => {
     emails.forEach((email) => {
       fn(email);
@@ -18,6 +19,20 @@ export const useEmailSelection = function () {
   let markRead = () => forSelected((e) => (e.read = true));
 
   let markUnread = () => forSelected((e) => (e.read = false));
+
+  let moveToInbox = () => {
+    forSelected((e) => (e.folder = 'inbox'));
+    clear();
+  };
+  let moveToSpam = () => {
+    forSelected((e) => (e.folder = 'spam'));
+    clear();
+  };
+
+  let moveToTrash = () => {
+    forSelected((e) => (e.folder = 'trash'));
+    clear();
+  };
   let clear = () => emails.clear();
   let toggle = function (email) {
     if (emails.has(email)) {
@@ -33,6 +48,9 @@ export const useEmailSelection = function () {
     emails,
     markRead,
     markUnread,
+    moveToInbox,
+    moveToSpam,
+    moveToTrash,
     toggle,
   };
 };

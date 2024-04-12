@@ -26,12 +26,45 @@
     >
     <span class="buttons"
       ><button
+        v-if="screen !== 'archive'"
         @click="emailSelection.archive()"
-        :disabled="[...emailSelection.emails].every((e) => e.archived)"
+        :disabled="
+          [...emailSelection.emails].every((e) => e.folder == 'archive')
+        "
       >
         Archive
-      </button></span
-    >
+      </button>
+    </span>
+
+    <span class="buttons"
+      ><button
+        v-if="screen !== 'trash'"
+        @click="emailSelection.moveToTrash()"
+        :disabled="[...emailSelection.emails].every((e) => e.folder == 'trash')"
+      >
+        Trash
+      </button>
+    </span>
+
+    <span class="buttons"
+      ><button
+        v-if="screen !== 'spam'"
+        @click="emailSelection.moveToSpam()"
+        :disabled="[...emailSelection.emails].every((e) => e.folder == 'spam')"
+      >
+        Spam
+      </button>
+    </span>
+
+    <span class="buttons"
+      ><button
+        v-if="screen !== 'inbox'"
+        @click="emailSelection.moveToInbox()"
+        :disabled="[...emailSelection.emails].every((e) => e.folder == 'inbox')"
+      >
+        Inbox
+      </button>
+    </span>
   </div>
 </template>
 <script>
@@ -68,6 +101,10 @@ export default {
   props: {
     emails: {
       type: Array,
+      required: true,
+    },
+    screen: {
+      type: String,
       required: true,
     },
   },
