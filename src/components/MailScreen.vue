@@ -6,18 +6,27 @@
       @click="selectScreen('inbox')"
       :disabled="selectedScreen == 'inbox'"
     >
-      <span> {{}} </span>Inbox
+      <span> Inbox </span>
+      <span>
+        {{ inboxCount }}
+      </span>
     </button>
 
     <button
       @click="selectScreen('starred')"
       :disabled="selectedScreen == 'starred'"
     >
-      Starred
+      <span> Starred </span>
+      <span>
+        {{ starredCount }}
+      </span>
     </button>
 
     <button @click="selectScreen('spam')" :disabled="selectedScreen == 'spam'">
-      Spam
+      <span> Spam </span>
+      <span>
+        {{ spamCount }}
+      </span>
     </button>
 
     <button
@@ -65,6 +74,9 @@ export default {
     archivedEmails() {
       return this.sortedEmails.filter((email) => email.folder === 'archive');
     },
+    inboxCount() {
+      return this.inboxEmails.length;
+    },
     inboxEmails() {
       return this.sortedEmails.filter((email) => email.folder === 'inbox');
     },
@@ -74,8 +86,14 @@ export default {
         return emailA.sendDate < emailB.sendDate ? 100 : -1;
       });
     },
+    spamCount() {
+      return this.spamEmails.length;
+    },
     spamEmails() {
       return this.sortedEmails.filter((email) => email.folder === 'spam');
+    },
+    starredCount() {
+      return this.starredEmails.length;
     },
     starredEmails() {
       return this.sortedEmails.filter((email) => email.favorite);
