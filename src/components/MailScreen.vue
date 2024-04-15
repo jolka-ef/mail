@@ -6,7 +6,7 @@
       @click="selectScreen('inbox')"
       :disabled="selectedScreen == 'inbox'"
     >
-      Inbox
+      <span> {{}} </span>Inbox
     </button>
 
     <button
@@ -62,23 +62,38 @@ export default {
     MailTable,
   },
   computed: {
+    archivedEmails() {
+      return this.sortedEmails.filter((email) => email.folder === 'archive');
+    },
+    inboxEmails() {
+      return this.sortedEmails.filter((email) => email.folder === 'inbox');
+    },
+
     sortedEmails() {
       return this.emails.sort((emailA, emailB) => {
         return emailA.sendDate < emailB.sendDate ? 100 : -1;
       });
     },
+    spamEmails() {
+      return this.sortedEmails.filter((email) => email.folder === 'spam');
+    },
+    starredEmails() {
+      return this.sortedEmails.filter((email) => email.favorite);
+    },
+
+    trashEmails() {
+      return this.sortedEmails.filter((email) => email.folder === 'trash');
+    },
+
     filteredEmails() {
-      if (this.selectedScreen == 'trash') {
-        return this.sortedEmails.filter((email) => email.folder === 'trash');
-      } else if (this.selectedScreen == 'spam') {
-        return this.sortedEmails.filter((email) => email.folder === 'spam');
-      } else if (this.selectedScreen == 'starred') {
-        return this.sortedEmails.filter((email) => email.favorite);
-      } else if (this.selectedScreen == 'inbox') {
-        return this.sortedEmails.filter((email) => email.folder === 'inbox');
-      } else if (this.selectedScreen == 'archive') {
-        return this.sortedEmails.filter((email) => email.folder === 'archive');
-      }
+      let filters = {
+        archive: this.archivedEmails,
+        inbox: this.inboxEmails,
+        spam: this.spamEmails,
+        starred: this.starredEmails,
+        trash: this.trashEmails,
+      };
+      return filters[this.selectedScreen];
     },
   },
   methods: {
