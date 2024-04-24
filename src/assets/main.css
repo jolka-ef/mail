@@ -72,7 +72,9 @@ input[type='checkbox']:checked {
 .mb-0 {
   margin-bottom: 0;
 }
-
+svg {
+  height: 1em;
+}
 /* Modal */
 
 .modal,
@@ -107,52 +109,30 @@ input[type='checkbox']:checked {
 
 /* Mail Table */
 
+.mail-item {
+  display: grid;
+  grid-template-columns: 3em 3em 1fr 2fr 8em;
+  align-items: center;
+}
+.mail-item span:last-of-type {
+  justify-self: end;
+}
 .mail-table {
   max-width: 1000px;
-  margin: auto;
-  border-collapse: collapse;
-  table-layout: fixed;
+  margin: 0 auto;
+  padding: 0;
 }
-.mail-table tr.read {
+.mail-table li.read {
   background-color: #eee;
 }
-.mail-table tr {
-  height: 40px;
-}
-.mail-table td {
+
+.mail-table li {
   border-bottom: 1px solid black;
   padding: 5px;
   text-align: left;
 }
-.mail-table tr:first-of-type td {
+.mail-table li:first-of-type td {
   border-top: 1px solid black;
-}
-.mail-table td p {
-  max-height: 1.2em;
-  overflow-y: hidden;
-  margin: 0;
-}
-
-.mail-table td.date {
-  width: 200px;
-  text-align: right;
-}
-.mail-table td.date span {
-  margin: 0.25em;
-}
-
-.mail-table td.date svg {
-  width: 1em;
-}
-.mail-table td button.star {
-  background: transparent;
-  border: none;
-  margin: 0;
-}
-
-.mail-table td button.star svg {
-  height: 1.5em;
-  width: 1.5em;
 }
 
 /* Bulk Action Bar */

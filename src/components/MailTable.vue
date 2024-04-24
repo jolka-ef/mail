@@ -1,43 +1,35 @@
 <template>
-  <table class="mail-table">
-    <thead>
-      <tr>
-        <th scope="col" class="sr-only">Checkbox</th>
-        <th scope="col" class="sr-only">From</th>
-        <th scope="col" class="sr-only">Email sybject</th>
-        <th scope="col" class="sr-only">Sent at</th>
-      </tr>
-    </thead>
-    <tr
+  <ul class="mail-table">
+    <li
       v-for="email in emails"
       :key="email.id"
-      :class="['clickable', email.read ? 'read' : '']"
+      :class="['clickable mail-item', email.read ? 'read' : '']"
       @mouseenter="isHovering = email.id"
       @mouseleave="isHovering = null"
     >
-      <td>
+      <span>
         <input
           type="checkbox"
           @click="emailSelection.toggle(email)"
           :checked="emailSelection.emails.has(email)"
         />
-      </td>
-      <td>
+      </span>
+      <span>
         <input
           class="starMask"
           type="checkbox"
           @click="toggleFavorite(email)"
           :checked="email.favorite"
         />
-      </td>
-      <td @click="openEmail(email)">
+      </span>
+      <span @click="openEmail(email)">
         {{ email.firstname }} {{ email.surname }}
-      </td>
-      <td @click="openEmail(email)">
+      </span>
+      <span @click="openEmail(email)">
         <strong> {{ email.subject }} </strong>
-      </td>
+      </span>
 
-      <td class="date" @click="openEmail(email)">
+      <span class="date" @click="openEmail(email)">
         <div v-show="isHovering == email.id">
           <button @click="toggleArchive">
             {{ email.archived ? 'Move to Inbox (e)' : 'Archive (e)' }}
@@ -59,9 +51,9 @@
             {{ formatDate(email.sendDate) }}
           </span>
         </div>
-      </td>
-    </tr>
-  </table>
+      </span>
+    </li>
+  </ul>
   <ModalView v-if="openedEmail" @closeModal="openedEmail = null">
     <MailView :email="openedEmail" @changeEmail="changeEmail" />
   </ModalView>
