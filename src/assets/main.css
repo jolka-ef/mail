@@ -10,10 +10,11 @@
 /* Global Styles */
 
 button {
-  font-size: 16px;
+  /* font-size: 16px;
   padding: 8px;
   border-radius: 3px;
-  margin: 5px 10px 5px 0px;
+  margin: 5px 10px 5px 0px; */
+  font-size: 1em;
   cursor: pointer;
 }
 
@@ -74,6 +75,7 @@ input[type='checkbox']:checked {
 }
 svg {
   height: 1em;
+  width: 1em;
 }
 /* Modal */
 
@@ -108,11 +110,30 @@ svg {
 }
 
 /* Mail Table */
-
-.mail-item {
-  display: grid;
-  grid-template-columns: 3em 3em 1fr 2fr 8em;
+.attachment {
+  margin-right: 0.5em;
+}
+.email-button {
+  background-color: transparent;
+  border: none;
+}
+.email-details {
+  display: flex;
   align-items: center;
+}
+.email-sender {
+  width: 12em;
+}
+.email-subject {
+  flex: 1 0 0;
+}
+.mail-item {
+  display: flex;
+  /* grid-template-columns: 2em 2em 1fr 2fr 8em; */
+  align-items: center;
+  gap: 1em;
+}
+.mail-item span {
 }
 .mail-item span:last-of-type {
   justify-self: end;
