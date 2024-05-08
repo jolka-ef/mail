@@ -1,59 +1,81 @@
 <template>
-  <h1>Mail {{ selectedScreen[0].toUpperCase() + selectedScreen.slice(1) }}</h1>
+  <div class="Container">
+    <h1 class="Title">
+      Mail {{ selectedScreen[0].toUpperCase() + selectedScreen.slice(1) }}
+    </h1>
 
-  <nav>
-    <button
-      @click="selectScreen('inbox')"
-      :disabled="selectedScreen == 'inbox'"
-    >
-      <span> Inbox </span>
-      <span>
-        {{ inboxCount }}
-      </span>
-    </button>
+    <nav class="Navigation">
+      <button
+        @click="selectScreen('inbox')"
+        :disabled="selectedScreen == 'inbox'"
+      >
+        <span>
+          <Inbox />
+          Inbox
+        </span>
+        <span>
+          {{ inboxCount }}
+        </span>
+      </button>
 
-    <button
-      @click="selectScreen('starred')"
-      :disabled="selectedScreen == 'starred'"
-    >
-      <span> Starred </span>
-      <span>
-        {{ starredCount }}
-      </span>
-    </button>
+      <button
+        @click="selectScreen('starred')"
+        :disabled="selectedScreen == 'starred'"
+      >
+        <span>
+          <Star />
+          Starred
+        </span>
+        <span>
+          {{ starredCount }}
+        </span>
+      </button>
 
-    <button @click="selectScreen('spam')" :disabled="selectedScreen == 'spam'">
-      <span> Spam </span>
-      <span>
-        {{ spamCount }}
-      </span>
-    </button>
+      <button
+        @click="selectScreen('spam')"
+        :disabled="selectedScreen == 'spam'"
+      >
+        <span>
+          <Spam />
+          Spam
+        </span>
+        <span>
+          {{ spamCount }}
+        </span>
+      </button>
 
-    <button
-      @click="selectScreen('trash')"
-      :disabled="selectedScreen == 'trash'"
-    >
-      Trash
-    </button>
+      <button
+        @click="selectScreen('trash')"
+        :disabled="selectedScreen == 'trash'"
+      >
+        <Trash />
+        Trash
+      </button>
 
-    <button
-      @click="selectScreen('archive')"
-      :disabled="selectedScreen == 'archive'"
-    >
-      Archived
-    </button>
-  </nav>
-  <BulkActionBar :emails="filteredEmails" :screen="selectedScreen" />
+      <button
+        @click="selectScreen('archive')"
+        :disabled="selectedScreen == 'archive'"
+      >
+        <Archive />
+        Archived
+      </button>
+    </nav>
 
-  <MailTable :emails="filteredEmails" />
+    <BulkActionBar :emails="filteredEmails" :screen="selectedScreen" />
+
+    <MailTable :emails="filteredEmails" />
+  </div>
 </template>
 <script>
 import { ref } from 'vue';
+import Archive from '../icons/Archive.vue';
 import BulkActionBar from './BulkActionBar.vue';
-
+import Inbox from '../icons/Inbox.vue';
 import MailService from '@/services/MailService';
 import MailTable from './MailTable.vue';
-
+import Spam from '@/icons/Spam.vue';
+import Star from '@/icons/Star.vue';
+import Trash from '@/icons/Trash.vue';
 import useEmailSelection from '../composables/use-email-selection.js';
 
 export default {
@@ -67,8 +89,13 @@ export default {
     };
   },
   components: {
+    Archive,
     BulkActionBar,
+    Inbox,
     MailTable,
+    Spam,
+    Star,
+    Trash,
   },
   computed: {
     archivedEmails() {
