@@ -1,5 +1,5 @@
 <template>
-  <div class="bulk-action-bar">
+  <div class="ActionBar">
     <span class="checkbox">
       <input
         type="checkbox"
@@ -13,6 +13,7 @@
         @click="emailSelection.markRead()"
         :disabled="[...emailSelection.emails].every((e) => e.read)"
       >
+        <CloseEnvelope />
         Mark Read
       </button></span
     >
@@ -21,6 +22,7 @@
         @click="emailSelection.markUnread()"
         :disabled="[...emailSelection.emails].every((e) => !e.read)"
       >
+        <OpenEnvelope />
         Mark Unread
       </button></span
     >
@@ -32,6 +34,7 @@
           [...emailSelection.emails].every((e) => e.folder == 'archive')
         "
       >
+        <Archive />
         Archive
       </button>
     </span>
@@ -42,6 +45,7 @@
         @click="emailSelection.moveToTrash()"
         :disabled="[...emailSelection.emails].every((e) => e.folder == 'trash')"
       >
+        <Trash />
         Trash
       </button>
     </span>
@@ -52,6 +56,7 @@
         @click="emailSelection.moveToSpam()"
         :disabled="[...emailSelection.emails].every((e) => e.folder == 'spam')"
       >
+        <Spam />
         Spam
       </button>
     </span>
@@ -68,8 +73,15 @@
   </div>
 </template>
 <script>
+import Archive from '../icons/Archive.vue';
+import CloseEnvelope from '../icons/CloseEnvelope.vue';
+import Inbox from '../icons/Inbox.vue';
+import OpenEnvelope from '../icons/OpenEnvelope.vue';
+import Spam from '../icons/Spam.vue';
+import Trash from '../icons/Trash.vue';
 import useEmailSelection from '@/composables/use-email-selection';
 import { computed } from 'vue';
+
 export default {
   setup(props) {
     let emailSelection = useEmailSelection();
@@ -97,6 +109,14 @@ export default {
       numberSelected,
       someEmailsSelected,
     };
+  },
+  components: {
+    Archive,
+    CloseEnvelope,
+    OpenEnvelope,
+    Inbox,
+    Spam,
+    Trash,
   },
   props: {
     emails: {
