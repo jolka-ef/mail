@@ -1,14 +1,14 @@
 <template>
-  <nav class="Navigation">
+  <nav class="FolderNav">
     <BaseButton
       @click="$emit('selectScreen', 'inbox')"
       :disabled="screen == 'inbox'"
     >
-      <span>
+      <span class="FolderName">
         <Inbox />
         Inbox
       </span>
-      <span>
+      <span class="FolderCount">
         {{ inboxCount }}
       </span>
     </BaseButton>
@@ -17,11 +17,11 @@
       @click="$emit('selectScreen', 'starred')"
       :disabled="screen == 'starred'"
     >
-      <span>
+      <span class="FolderName">
         <Star />
         Starred
       </span>
-      <span>
+      <span class="FolderCount">
         {{ starredCount }}
       </span>
     </BaseButton>
@@ -30,11 +30,11 @@
       @click="$emit('selectScreen', 'spam')"
       :disabled="screen == 'spam'"
     >
-      <span>
+      <span class="FolderName">
         <Spam />
         Spam
       </span>
-      <span>
+      <span class="FolderCount">
         {{ spamCount }}
       </span>
     </BaseButton>
@@ -43,16 +43,20 @@
       @click="$emit('selectScreen', 'trash')"
       :disabled="screen == 'trash'"
     >
-      <Trash />
-      Trash
+      <span class="FolderName">
+        <Trash />
+        Trash
+      </span>
     </BaseButton>
 
     <BaseButton
       @click="$emit('selectScreen', 'archive')"
       :disabled="screen == 'archive'"
     >
-      <Archive />
-      Archived
+      <span class="FolderName">
+        <Archive />
+        Archived
+      </span>
     </BaseButton>
   </nav>
 </template>

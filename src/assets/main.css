@@ -10,10 +10,8 @@
 /* Global Styles */
 
 button {
-  /* font-size: 16px;
-  padding: 8px;
-  border-radius: 3px;
-  margin: 5px 10px 5px 0px; */
+  background-color: transparent;
+  border: none;
   font-size: 1em;
   cursor: pointer;
 }
@@ -22,6 +20,9 @@ button:disabled {
   cursor: auto;
 }
 
+svg {
+  fill: currentColor;
+}
 button.selected {
   cursor: auto;
   color: black;
@@ -110,6 +111,10 @@ svg {
 }
 
 /* Mail Table */
+.MailList {
+  grid-area: mailList;
+}
+
 .attachment {
   margin-right: 0.5em;
 }
@@ -138,26 +143,24 @@ svg {
 .mail-item span:last-of-type {
   justify-self: end;
 }
-.mail-table {
-  max-width: 1000px;
-  margin: 0 auto;
+.MailList {
   padding: 0;
 }
-.mail-table li.read {
+.MailList li.read {
   background-color: #eee;
 }
 
-.mail-table li {
+.MailList li {
   border-bottom: 1px solid black;
   padding: 5px;
   text-align: left;
 }
-.mail-table li:first-of-type td {
+.MailList li:first-of-type td {
   border-top: 1px solid black;
 }
 
 /* Bulk Action Bar */
-
+/* 
 .bulk-action-bar {
   width: 100%;
   max-width: 1000px;
@@ -173,7 +176,7 @@ svg {
 .bulk-action-bar .checkbox {
   margin-right: 6px;
   margin-left: 3px;
-}
+} */
 
 .sr-only {
   border: 0 !important;
@@ -187,4 +190,61 @@ svg {
   position: absolute !important;
   width: 1px !important;
   white-space: nowrap !important;
+}
+
+/* Mail Screen */
+.ActionBar {
+  grid-area: bulkAction;
+  text-align: left;
+}
+.Container {
+  padding: 2em;
+  @media (min-width: 580px) {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      'title title title title'
+      '.......... bulkAction bulkAction bulkAction'
+      'sidebarNav mailList mailList mailList';
+  }
+}
+.Container-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+  .Header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+  }
+  .Header-nav {
+    display: flex;
+    @media (max-width: 430px) {
+      flex-direction: column;
+    }
+    gap: 1em;
+  }
+}
+.Title {
+  grid-area: title;
+}
+
+/*Navigation */
+.FolderCount {
+  margin-left: auto;
+}
+.FolderName {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+.FolderNav {
+  grid-area: sidebarNav;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 480px) and (max-width: 580px) {
+    flex-direction: row;
+  }
 }
