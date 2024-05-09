@@ -3,63 +3,13 @@
     <h1 class="Title">
       Mail {{ selectedScreen[0].toUpperCase() + selectedScreen.slice(1) }}
     </h1>
-
-    <nav class="Navigation">
-      <button
-        @click="selectScreen('inbox')"
-        :disabled="selectedScreen == 'inbox'"
-      >
-        <span>
-          <Inbox />
-          Inbox
-        </span>
-        <span>
-          {{ inboxCount }}
-        </span>
-      </button>
-
-      <button
-        @click="selectScreen('starred')"
-        :disabled="selectedScreen == 'starred'"
-      >
-        <span>
-          <Star />
-          Starred
-        </span>
-        <span>
-          {{ starredCount }}
-        </span>
-      </button>
-
-      <button
-        @click="selectScreen('spam')"
-        :disabled="selectedScreen == 'spam'"
-      >
-        <span>
-          <Spam />
-          Spam
-        </span>
-        <span>
-          {{ spamCount }}
-        </span>
-      </button>
-
-      <button
-        @click="selectScreen('trash')"
-        :disabled="selectedScreen == 'trash'"
-      >
-        <Trash />
-        Trash
-      </button>
-
-      <button
-        @click="selectScreen('archive')"
-        :disabled="selectedScreen == 'archive'"
-      >
-        <Archive />
-        Archived
-      </button>
-    </nav>
+    <Navigation
+      @selectScreen="selectScreen"
+      :inboxCount="inboxCount"
+      :screen="selectedScreen"
+      :spamCount="spamCount"
+      :starredCount="starredCount"
+    />
 
     <BulkActionBar :emails="filteredEmails" :screen="selectedScreen" />
 
@@ -73,6 +23,7 @@ import BulkActionBar from './BulkActionBar.vue';
 import Inbox from '../icons/Inbox.vue';
 import MailService from '@/services/MailService';
 import MailTable from './MailTable.vue';
+import Navigation from './Navigation.vue';
 import Spam from '@/icons/Spam.vue';
 import Star from '@/icons/Star.vue';
 import Trash from '@/icons/Trash.vue';
@@ -93,6 +44,7 @@ export default {
     BulkActionBar,
     Inbox,
     MailTable,
+    Navigation,
     Spam,
     Star,
     Trash,
