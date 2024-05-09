@@ -1,6 +1,6 @@
 <template>
   <nav class="Navigation">
-    <button
+    <BaseButton
       @click="$emit('selectScreen', 'inbox')"
       :disabled="screen == 'inbox'"
     >
@@ -11,9 +11,9 @@
       <span>
         {{ inboxCount }}
       </span>
-    </button>
+    </BaseButton>
 
-    <button
+    <BaseButton
       @click="$emit('selectScreen', 'starred')"
       :disabled="screen == 'starred'"
     >
@@ -24,9 +24,12 @@
       <span>
         {{ starredCount }}
       </span>
-    </button>
+    </BaseButton>
 
-    <button @click="$emit('selectScreen', 'spam')" :disabled="screen == 'spam'">
+    <BaseButton
+      @click="$emit('selectScreen', 'spam')"
+      :disabled="screen == 'spam'"
+    >
       <span>
         <Spam />
         Spam
@@ -34,27 +37,28 @@
       <span>
         {{ spamCount }}
       </span>
-    </button>
+    </BaseButton>
 
-    <button
+    <BaseButton
       @click="$emit('selectScreen', 'trash')"
       :disabled="screen == 'trash'"
     >
       <Trash />
       Trash
-    </button>
+    </BaseButton>
 
-    <button
+    <BaseButton
       @click="$emit('selectScreen', 'archive')"
       :disabled="screen == 'archive'"
     >
       <Archive />
       Archived
-    </button>
+    </BaseButton>
   </nav>
 </template>
 <script>
 import Archive from '../icons/Archive.vue';
+import BaseButton from './BaseButton.vue';
 import Inbox from '../icons/Inbox.vue';
 import Spam from '@/icons/Spam.vue';
 import Star from '@/icons/Star.vue';
@@ -62,6 +66,7 @@ import Trash from '@/icons/Trash.vue';
 export default {
   components: {
     Archive,
+    BaseButton,
     Inbox,
     Spam,
     Star,
