@@ -1,76 +1,75 @@
 <template>
-  <div class="ActionBar">
-    <span class="checkbox">
-      <input
-        type="checkbox"
-        :checked="allEmailsSelected"
-        :class="[someEmailsSelected ? 'partial-check' : '']"
-        @click="bulkSelect"
-      />
-    </span>
-    <span class="buttons"
-      ><button
-        @click="emailSelection.markRead()"
-        :disabled="[...emailSelection.emails].every((e) => e.read)"
-      >
+  <nav class="ActionBar">
+    <input
+      type="checkbox"
+      :checked="allEmailsSelected"
+      :class="['ActionBar-checkbox', someEmailsSelected ? 'partial-check' : '']"
+      @click="bulkSelect"
+    />
+    <BaseButton
+      @click="emailSelection.markRead()"
+      :disabled="[...emailSelection.emails].every((e) => e.read)"
+    >
+      <span class="ActionName">
         <CloseEnvelope />
         Mark Read
-      </button></span
+      </span>
+    </BaseButton>
+
+    <BaseButton
+      @click="emailSelection.markUnread()"
+      :disabled="[...emailSelection.emails].every((e) => !e.read)"
     >
-    <span class="buttons"
-      ><button
-        @click="emailSelection.markUnread()"
-        :disabled="[...emailSelection.emails].every((e) => !e.read)"
-      >
+      <span class="ActionName">
         <OpenEnvelope />
         Mark Unread
-      </button></span
+      </span>
+    </BaseButton>
+
+    <BaseButton
+      v-if="screen !== 'archive'"
+      @click="emailSelection.archive()"
+      :disabled="[...emailSelection.emails].every((e) => e.folder == 'archive')"
     >
-    <span class="buttons"
-      ><button
-        v-if="screen !== 'archive'"
-        @click="emailSelection.archive()"
-        :disabled="
-          [...emailSelection.emails].every((e) => e.folder == 'archive')
-        "
-      >
+      <span class="ActionName">
         <Archive />
         Archive
-      </button>
-    </span>
+      </span>
+    </BaseButton>
 
-    <span class="buttons"
-      ><button
-        v-if="screen !== 'trash'"
-        @click="emailSelection.moveToTrash()"
-        :disabled="[...emailSelection.emails].every((e) => e.folder == 'trash')"
-      >
+    <BaseButton
+      v-if="screen !== 'trash'"
+      @click="emailSelection.moveToTrash()"
+      :disabled="[...emailSelection.emails].every((e) => e.folder == 'trash')"
+    >
+      <span class="ActionName">
         <Trash />
         Trash
-      </button>
-    </span>
+      </span>
+    </BaseButton>
 
-    <span class="buttons"
-      ><button
-        v-if="screen !== 'spam'"
-        @click="emailSelection.moveToSpam()"
-        :disabled="[...emailSelection.emails].every((e) => e.folder == 'spam')"
-      >
+    <BaseButton
+      v-if="screen !== 'spam'"
+      @click="emailSelection.moveToSpam()"
+      :disabled="[...emailSelection.emails].every((e) => e.folder == 'spam')"
+    >
+      <span class="ActionName">
         <Spam />
         Spam
-      </button>
-    </span>
+      </span>
+    </BaseButton>
 
-    <span class="buttons"
-      ><button
-        v-if="screen !== 'inbox'"
-        @click="emailSelection.moveToInbox()"
-        :disabled="[...emailSelection.emails].every((e) => e.folder == 'inbox')"
-      >
+    <BaseButton
+      v-if="screen !== 'inbox'"
+      @click="emailSelection.moveToInbox()"
+      :disabled="[...emailSelection.emails].every((e) => e.folder == 'inbox')"
+    >
+      <span class="ActionName">
+        <Inbox />
         Inbox
-      </button>
-    </span>
-  </div>
+      </span>
+    </BaseButton>
+  </nav>
 </template>
 <script>
 import Archive from '../icons/Archive.vue';
@@ -81,6 +80,7 @@ import Spam from '../icons/Spam.vue';
 import Trash from '../icons/Trash.vue';
 import useEmailSelection from '@/composables/use-email-selection';
 import { computed } from 'vue';
+import BaseButton from './BaseButton.vue';
 
 export default {
   setup(props) {
@@ -112,6 +112,7 @@ export default {
   },
   components: {
     Archive,
+    BaseButton,
     CloseEnvelope,
     OpenEnvelope,
     Inbox,
