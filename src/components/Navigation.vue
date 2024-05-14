@@ -1,6 +1,7 @@
 <template>
   <nav class="FolderNav">
     <BaseButton
+      class="FolderNav-button"
       @click="$emit('selectScreen', 'inbox')"
       :disabled="screen == 'inbox'"
     >
@@ -14,6 +15,7 @@
     </BaseButton>
 
     <BaseButton
+      class="FolderNav-button"
       @click="$emit('selectScreen', 'starred')"
       :disabled="screen == 'starred'"
     >
@@ -27,6 +29,7 @@
     </BaseButton>
 
     <BaseButton
+      class="FolderNav-button"
       @click="$emit('selectScreen', 'spam')"
       :disabled="screen == 'spam'"
     >
@@ -40,6 +43,7 @@
     </BaseButton>
 
     <BaseButton
+      class="FolderNav-button"
       @click="$emit('selectScreen', 'trash')"
       :disabled="screen == 'trash'"
     >
@@ -50,6 +54,7 @@
     </BaseButton>
 
     <BaseButton
+      class="FolderNav-button"
       @click="$emit('selectScreen', 'archive')"
       :disabled="screen == 'archive'"
     >
@@ -97,3 +102,29 @@ export default {
   },
 };
 </script>
+<style>
+.FolderCount {
+  margin-left: auto;
+}
+.FolderName {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  margin-right: 0.5em;
+}
+.FolderNav {
+  grid-area: sidebarNav;
+  display: flex;
+  gap: 0.25em;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.75em 0;
+  @media (max-width: 480px), (min-width: 700px) {
+    flex-direction: column;
+    justify-content: unset;
+  }
+}
+.FolderNav-button {
+  margin: 0.6em 0;
+}
+</style>
