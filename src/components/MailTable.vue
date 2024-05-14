@@ -3,36 +3,33 @@
     <li
       v-for="email in emails"
       :key="email.id"
-      :class="['clickable mail-item', email.read ? 'read' : '']"
+      :class="['MailList-item', email.read ? 'read' : '']"
       @mouseenter="isHovering = email.id"
       @mouseleave="isHovering = null"
     >
-      <span>
-        <input
-          type="checkbox"
-          @click="emailSelection.toggle(email)"
-          :checked="emailSelection.emails.has(email)"
-        />
-      </span>
-      <span>
-        <input
-          class="starMask"
-          type="checkbox"
-          @click="toggleFavorite(email)"
-          :checked="email.favorite"
-        />
-      </span>
-      <span class="email-sender" @click="openEmail(email)">
+      <input
+        class="MailPreview-checkbox"
+        type="checkbox"
+        @click="emailSelection.toggle(email)"
+        :checked="emailSelection.emails.has(email)"
+      />
+      <input
+        class="MailPreview-star"
+        type="checkbox"
+        @click="toggleFavorite(email)"
+        :checked="email.favorite"
+      />
+      <span class="MailPreview-sender" @click="openEmail(email)">
         {{ email.firstname }} {{ email.surname }}
       </span>
-      <span class="email-subject" @click="openEmail(email)">
-        <strong> {{ email.subject }} </strong>
+      <span class="MailPreview-title" @click="openEmail(email)">
+        {{ email.subject }}
       </span>
 
-      <span class="email-details">
+      <span class="MailPreview-details">
         <button
-          class="email-button"
           v-show="isHovering == email.id"
+          class="MailPreview-button"
           @click="toggleArchive(email)"
         >
           <Inbox v-if="email.folder === 'archive'" />
@@ -40,22 +37,21 @@
         </button>
 
         <button
-          class="email-button"
           v-show="isHovering == email.id"
+          class="MailPreview-button"
           @click="toggleRead(email)"
         >
           <OpenEnvelope v-if="email.read" />
 
           <CloseEnvelope v-else />
         </button>
-        <span
-          class="attachment"
+
+        <PaperClip
+          class="MailPreview-attachment"
           v-show="isHovering !== email.id"
           v-if="email.attachment"
-        >
-          <PaperClip />
-        </span>
-        <span v-show="isHovering !== email.id">
+        />
+        <span class="MailPreview-date" v-show="isHovering !== email.id">
           {{ formatDate(email.sendDate) }}
         </span>
       </span>
@@ -167,4 +163,80 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.MailList {
+  grid-area: mailList;
+  padding: 0;
+  background: var(--color-background);
+}
+.MailList-item {
+  border-bottom: var(--line);
+  cursor: pointer;
+  font-weight: bold;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr auto 2.5em;
+  grid-template-areas:
+    'checkbox sender date date'
+    'checkbox title attachment star';
+  padding: var(--gap);
+  gap: 1em;
+}
+.MailList-item:first-of-type {
+  border-top: var(--line);
+}
+.MailList-item.read {
+  background-color: #f5f5ff;
+  font-weight: normal;
+}
+
+@media (min-width: 701px) {
+  .MailList-item {
+    grid-template-columns: auto auto 14em 3fr auto auto;
+    grid-template-areas: ' checkbox star sender title attachment date ';
+  }
+}
+.MailPreview-attachment {
+  grid-area: attachment;
+  justify-self: end;
+}
+.MailPreview-checkbox {
+  align-self: center;
+  grid-area: checkbox;
+}
+
+.MailPreview-date {
+  grid-area: date;
+}
+
+.MailPreview-details {
+  display: contents;
+}
+
+.MailPreview-sender {
+  grid-area: sender;
+}
+.MailPreview-star {
+  background: #b2b8be;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  grid-area: star;
+  justify-self: center;
+}
+.MailPreview-title {
+  grid-area: title;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
