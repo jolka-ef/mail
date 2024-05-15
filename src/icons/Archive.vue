@@ -1,5 +1,5 @@
 <template>
-  <svg>
+  <svg viewBox="0 0 16 16">
     <g id="ic-archive-box">
       <path
         d="M5.5 8.5A.5.5 0 0 1 6 8h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5Z"
