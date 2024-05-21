@@ -1,6 +1,6 @@
 <template>
-  <div class="email-display">
-    <div>
+  <div>
+    <nav class="ActionBar">
       <input
         class="starMask"
         type="checkbox"
@@ -15,11 +15,11 @@
       </button>
       <button @click="goNewer">Newer (k)</button>
       <button @click="goOlder">Older (j)</button>
-    </div>
-    <h2 class="mb-0">
+    </nav>
+    <h2 class="MailView-title">
       Subject : <strong>{{ email.subject }}</strong>
     </h2>
-    <p>
+    <p class="MailView-details">
       <em>{{ email.from }} on {{ formatDate(email.sendDate) }} </em>
     </p>
     <p v-html="marked(email.body)" />
@@ -56,7 +56,7 @@ export default {
       emit('changeEmail', { changeIndex: 1 });
     };
     let goOlderAndArchive = () => {
-      emit('changeEmail', { changeIndex: 1, toggleArchive: true, save: true });
+      emit('', { changeIndex: 1, toggleArchive: true, save: true });
     };
 
     useKeydown([
@@ -87,4 +87,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.MailView-details {
+  margin: 1em 0;
+  font-weight: bolder;
+}
+
+.MailView-title {
+  margin: 1em 0;
+}
+</style>
