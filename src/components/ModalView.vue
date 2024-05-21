@@ -44,6 +44,6 @@ export default {
   background-color: white;
   min-height: 500px;
   z-index: 10;
-  opacioy: 1;
+  opacity: 1;
 }
 </style>

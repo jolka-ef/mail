@@ -134,7 +134,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 1.25em;
-  background-color: var(--color-background);
+  background-color: var(--color-background-light);
   padding: var(--gap) 0;
 }
 

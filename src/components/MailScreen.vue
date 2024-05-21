@@ -11,7 +11,7 @@
       :starredCount="starredCount"
     />
 
-    <BulkActionBar :emails="filteredEmails" :screen="selectedScreen" />
+    <ActionBar :emails="filteredEmails" :screen="selectedScreen" />
 
     <MailTable :emails="filteredEmails" />
   </div>
@@ -19,7 +19,7 @@
 <script>
 import { ref } from 'vue';
 import Archive from '../icons/Archive.vue';
-import BulkActionBar from './BulkActionBar.vue';
+import ActionBar from './ActionBar.vue';
 import Inbox from '../icons/Inbox.vue';
 import MailService from '@/services/MailService';
 import MailTable from './MailTable.vue';
@@ -41,7 +41,7 @@ export default {
   },
   components: {
     Archive,
-    BulkActionBar,
+    ActionBar,
     Inbox,
     MailTable,
     Navigation,

@@ -1,23 +1,51 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: var(--color-text);
   margin-top: 60px;
 }
 
 /* Global Styles */
-
+body {
+  background-color: var(--color-background-dark);
+}
 button {
   background-color: transparent;
   border: none;
   font-size: 1em;
   cursor: pointer;
+  padding: 0;
+}
+label {
+  font-size: 1.15em;
+  cursor: pointer;
+  padding: 0.5em;
 }
 
-button:disabled {
-  cursor: auto;
+input[type='checkbox'] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: transparent;
+  /* Not removed via appearance */
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  cursor: pointer;
+  width: 1em;
+  height: 1em;
+  display: grid;
+  place-content: center;
 }
 
 svg {
@@ -30,221 +58,30 @@ button.selected {
   border-width: 2px;
 }
 
-.clickable {
-  cursor: pointer;
-}
-
-input[type='checkbox'] {
-  -webkit-appearance: none;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  background: white;
-  border-radius: 2px;
-  border: 1px solid #555;
-  position: relative;
-  vertical-align: middle;
-  padding: 10px;
-}
-
-input[type='checkbox'].starMask {
-  background: #b2b8be;
-  clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  );
-}
-
-input[type='checkbox'].partial-check {
-  background: #abc;
-}
-
-input[type='checkbox']:checked {
-  background: #679;
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
 svg {
   height: 1em;
   width: 1em;
 }
-/* Modal */
-
-.modal,
-.overlay {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-.overlay {
-  opacity: 0.5;
-  background-color: black;
-}
-.modal-card {
-  position: relative;
-  max-width: 80%;
-  margin: auto;
-  margin-top: 30px;
-  padding: 20px;
-  background-color: white;
-  min-height: 500px;
-  z-index: 10;
-  opacity: 1;
-}
-
-/* Email Modal */
-
-.email-display {
-  text-align: left;
-}
-
-/* Mail Table */
-.MailList {
-  grid-area: mailList;
-}
-
-.attachment {
-  margin-right: 0.5em;
-}
-.email-button {
-  background-color: transparent;
-  border: none;
-}
-.email-details {
-  display: flex;
-  align-items: center;
-}
-.email-sender {
-  width: 12em;
-}
-.email-subject {
-  flex: 1 0 0;
-}
-.mail-item {
-  display: flex;
-  /* grid-template-columns: 2em 2em 1fr 2fr 8em; */
-  align-items: center;
-  gap: 1em;
-}
-.mail-item span {
-}
-.mail-item span:last-of-type {
-  justify-self: end;
-}
-.MailList {
-  padding: 0;
-}
-.MailList li.read {
-  background-color: #eee;
-}
-
-.MailList li {
-  border-bottom: 1px solid black;
-  padding: 5px;
-  text-align: left;
-}
-.MailList li:first-of-type td {
-  border-top: 1px solid black;
-}
-
-/* Bulk Action Bar */
-/* 
-.bulk-action-bar {
-  width: 100%;
-  max-width: 1000px;
-  margin: auto;
-  text-align: left;
-  padding-bottom: 8px;
-}
-
-.bulk-action-bar input {
-  margin: 5px;
-}
-
-.bulk-action-bar .checkbox {
-  margin-right: 6px;
-  margin-left: 3px;
-} */
-
-.sr-only {
-  border: 0 !important;
-  clip: rect(1px, 1px, 1px, 1px) !important;
-  -webkit-clip-path: inset(50%) !important;
-  clip-path: inset(50%) !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  margin: -1px !important;
-  padding: 0 !important;
-  position: absolute !important;
-  width: 1px !important;
-  white-space: nowrap !important;
-}
 
 /* Mail Screen */
-.ActionBar {
-  grid-area: bulkAction;
-  text-align: left;
-}
 .Container {
-  padding: 2em;
-  @media (min-width: 580px) {
+  padding: 3vw;
+}
+
+@media (min-width: 700px) {
+  .Container {
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: var(--gap-container);
+    grid-template-columns: 1fr 6fr;
     grid-template-areas:
-      'title title title title'
-      '.......... bulkAction bulkAction bulkAction'
-      'sidebarNav mailList mailList mailList';
+      'title title '
+      '.... bulkAction'
+      'sidebarNav mailList';
   }
-}
-.Container-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-  .Header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-  }
-  .Header-nav {
-    display: flex;
-    @media (max-width: 430px) {
-      flex-direction: column;
-    }
-    gap: 1em;
+  .ActionBar {
+    margin-bottom: calc(-1 * var(--gap-container));
   }
 }
 .Title {
   grid-area: title;
-}
-
-/*Navigation */
-.FolderCount {
-  margin-left: auto;
-}
-.FolderName {
-  display: flex;
-  align-items: center;
-  gap: 0.75em;
-}
-.FolderNav {
-  grid-area: sidebarNav;
-  display: flex;
-  flex-direction: column;
-  @media (min-width: 480px) and (max-width: 580px) {
-    flex-direction: row;
-  }
 }
