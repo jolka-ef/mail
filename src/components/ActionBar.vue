@@ -1,6 +1,6 @@
 <template>
   <nav class="ActionBar">
-    <ActionBarCheckbox
+    <CheckAll
       :partialCheck="someEmailsSelected"
       :checked="allEmailsSelected"
       @click="bulkSelect"
@@ -75,7 +75,7 @@ import Trash from '../icons/Trash.vue';
 import useEmailSelection from '@/composables/use-email-selection';
 import { computed } from 'vue';
 import BaseButton from './BaseButton.vue';
-import ActionBarCheckbox from './ActionBarCheckbox.vue';
+import CheckAll from './CheckAll.vue';
 
 export default {
   setup(props) {
@@ -106,7 +106,7 @@ export default {
     };
   },
   components: {
-    ActionBarCheckbox,
+    CheckAll,
     Archive,
     BaseButton,
     CloseEnvelope,

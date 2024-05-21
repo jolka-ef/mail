@@ -7,16 +7,9 @@
       @mouseenter="isHovering = email.id"
       @mouseleave="isHovering = null"
     >
-      <input
-        class="MailPreview-checkbox"
-        type="checkbox"
-        @click="emailSelection.toggle(email)"
-        :checked="emailSelection.emails.has(email)"
-      />
-      <input
-        class="MailPreview-star"
-        type="checkbox"
-        @click="toggleFavorite(email)"
+      <CheckMail :email="email" />
+      <CheckStar
+        @toggleStar="toggleFavorite(email)"
         :checked="email.favorite"
       />
       <span class="MailPreview-sender" @click="openEmail(email)">
@@ -26,34 +19,32 @@
         {{ email.subject }}
       </span>
 
-      <span class="MailPreview-details">
-        <button
-          v-show="isHovering == email.id"
-          class="MailPreview-button"
-          @click="toggleArchive(email)"
-        >
-          <Inbox v-if="email.folder === 'archive'" />
-          <Archive v-else />
-        </button>
+      <button
+        v-show="isHovering == email.id"
+        class="MailPreview-button"
+        @click="toggleArchive(email)"
+      >
+        <Inbox v-if="email.folder === 'archive'" />
+        <Archive v-else />
+      </button>
 
-        <button
-          v-show="isHovering == email.id"
-          class="MailPreview-button"
-          @click="toggleRead(email)"
-        >
-          <OpenEnvelope v-if="email.read" />
+      <button
+        v-show="isHovering == email.id"
+        class="MailPreview-button"
+        @click="toggleRead(email)"
+      >
+        <OpenEnvelope v-if="email.read" />
 
-          <CloseEnvelope v-else />
-        </button>
+        <CloseEnvelope v-else />
+      </button>
 
-        <PaperClip
-          class="MailPreview-attachment"
-          v-show="isHovering !== email.id"
-          v-if="email.attachment"
-        />
-        <span class="MailPreview-date" v-show="isHovering !== email.id">
-          {{ formatDate(email.sendDate) }}
-        </span>
+      <PaperClip
+        class="MailPreview-attachment"
+        v-show="isHovering !== email.id"
+        v-if="email.attachment"
+      />
+      <span class="MailPreview-date" v-show="isHovering !== email.id">
+        {{ formatDate(email.sendDate) }}
       </span>
     </li>
   </ul>
@@ -65,15 +56,17 @@
 import { formatDate } from '@/utils/formatDate.js';
 import { ref } from 'vue';
 import Archive from '../icons/Archive.vue';
-import BulkActionBar from './BulkActionBar.vue';
+import CheckMail from './CheckMail.vue';
+import CheckStar from './CheckStar.vue';
+
 import CloseEnvelope from '../icons/CloseEnvelope.vue';
+
 import Inbox from '../icons/Inbox.vue';
 import MailService from '@/services/MailService';
 import MailView from './MailView.vue';
 import ModalView from './ModalView.vue';
 import OpenEnvelope from '../icons/OpenEnvelope.vue';
 import PaperClip from '../icons/PaperClip.vue';
-
 import useEmailSelection from '../composables/use-email-selection.js';
 
 export default {
@@ -87,7 +80,8 @@ export default {
   },
   components: {
     Archive,
-    BulkActionBar,
+    CheckMail,
+    CheckStar,
     CloseEnvelope,
     Inbox,
     MailView,
@@ -163,9 +157,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .MailList {
   grid-area: mailList;
+  align-self: start;
   padding: 0;
   background: var(--color-background);
 }
@@ -179,8 +174,17 @@ export default {
   grid-template-areas:
     'checkbox sender date date'
     'checkbox title attachment star';
-  padding: var(--gap);
-  gap: 1em;
+
+  align-items: center;
+
+  /* padding: var(--gap); */
+  /* nie moge bo klik */
+  /* gap: 1em; */
+}
+
+.MailList-item:hover {
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 .MailList-item:first-of-type {
   border-top: var(--line);
@@ -200,41 +204,26 @@ export default {
   grid-area: attachment;
   justify-self: end;
 }
-.MailPreview-checkbox {
-  align-self: center;
-  grid-area: checkbox;
+.MailPreview-button:last-of-type {
+  padding-right: var(--gap-container);
+}
+
+.MailPreview-button {
+  padding: 0.5em;
 }
 
 .MailPreview-date {
   grid-area: date;
-}
-
-.MailPreview-details {
-  display: contents;
+  padding: var(--gap-container);
 }
 
 .MailPreview-sender {
   grid-area: sender;
-}
-.MailPreview-star {
-  background: #b2b8be;
-  clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  );
-  grid-area: star;
-  justify-self: center;
+  padding: var(--gap-container);
 }
 .MailPreview-title {
   grid-area: title;
+  padding: var(--gap-container);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
