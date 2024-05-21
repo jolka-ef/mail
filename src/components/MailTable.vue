@@ -217,15 +217,35 @@ export default {
   padding: var(--gap-container);
 }
 
-.MailPreview-sender {
-  grid-area: sender;
-  padding: var(--gap-container);
-}
+.MailPreview-sender,
 .MailPreview-title {
-  grid-area: title;
+  grid-area: sender;
   padding: var(--gap-container);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.MailPreview-sender {
+  grid-area: sender;
+}
+
+.MailPreview-title {
+  grid-area: title;
+}
+.ScreenOnly:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.MailPreview-buttons {
+  grid-area: date;
+}
+.MailPreview-buttons > button {
+  margin: 0.5em;
 }
 </style>
